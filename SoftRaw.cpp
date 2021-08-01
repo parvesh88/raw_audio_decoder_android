@@ -118,6 +118,13 @@ OMX_ERRORTYPE SoftRaw::internalGetParameter(
             pcmParams->ePCMMode = OMX_AUDIO_PCMModeLinear;
             pcmParams->eChannelMapping[0] = OMX_AUDIO_ChannelLF;
             pcmParams->eChannelMapping[1] = OMX_AUDIO_ChannelRF;
+            pcmParams->eChannelMapping[2] = OMX_AUDIO_ChannelCF;
+            pcmParams->eChannelMapping[3] = OMX_AUDIO_ChannelLFE;
+            pcmParams->eChannelMapping[4] = OMX_AUDIO_ChannelLR;
+            pcmParams->eChannelMapping[5] = OMX_AUDIO_ChannelRR;
+            pcmParams->eChannelMapping[6] = OMX_AUDIO_ChannelLS;
+            pcmParams->eChannelMapping[7] = OMX_AUDIO_ChannelRS;
+            
 
             pcmParams->nChannels = mChannelCount;
             pcmParams->nSamplingRate = mSampleRate;
