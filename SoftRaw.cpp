@@ -112,9 +112,9 @@ OMX_ERRORTYPE SoftRaw::internalGetParameter(
             }
 
             pcmParams->eNumData = OMX_NumericalDataSigned;
-            pcmParams->eEndian = OMX_EndianBig;
+            pcmParams->eEndian = OMX_EndianLittle;
             pcmParams->bInterleaved = OMX_TRUE;
-            pcmParams->nBitPerSample = 16;
+            pcmParams->nBitPerSample = 32;
             pcmParams->ePCMMode = OMX_AUDIO_PCMModeLinear;
             pcmParams->eChannelMapping[0] = OMX_AUDIO_ChannelLF;
             pcmParams->eChannelMapping[1] = OMX_AUDIO_ChannelRF;
