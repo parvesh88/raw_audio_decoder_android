@@ -24,6 +24,13 @@
 #include <media/stagefright/foundation/hexdump.h>
 
 namespace android {
+	
+inline OMX_ENDIANTYPE getByteOrder()
+{
+   short int word = 0x0001;
+   char *byte = (char *) &word;
+   return(byte[0] ? OMX_EndianLittle :  OMX_EndianBig);
+}
 
 template<class T>
 static void InitOMXParams(T *params) {
@@ -112,7 +119,7 @@ OMX_ERRORTYPE SoftRaw::internalGetParameter(
             }
 
             pcmParams->eNumData = OMX_NumericalDataSigned;
-            pcmParams->eEndian = OMX_EndianLittle;
+            pcmParams->eEndian = getByteOrder();
             pcmParams->bInterleaved = OMX_TRUE;
             pcmParams->nBitPerSample = 32;
             pcmParams->ePCMMode = OMX_AUDIO_PCMModeLinear;
