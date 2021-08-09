@@ -23,14 +23,15 @@
 #include <media/stagefright/foundation/ADebug.h>
 #include <media/stagefright/foundation/hexdump.h>
 
-namespace android {
-	
-inline OMX_ENDIANTYPE getByteOrder()
-{
-   short int word = 0x0001;
-   char *byte = (char *) &word;
-   return(byte[0] ? OMX_EndianLittle :  OMX_EndianBig);
-}
+namespace android{
+
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+OMX_ENDIANTYPE byteOrder = OMX_EndianLittle;
+#elif __BYTE_ORDER__ == __ORDER_LITTLE_BIG__
+OMX_ENDIANTYPE byteOrder = OMX_EndianBig;
+#else
+OMX_ENDIANTYPE byteOrder = OMX_EndianMax;
+#endif
 
 template<class T>
 static void InitOMXParams(T *params) {
@@ -119,7 +120,7 @@ OMX_ERRORTYPE SoftRaw::internalGetParameter(
             }
 
             pcmParams->eNumData = OMX_NumericalDataSigned;
-            pcmParams->eEndian = getByteOrder();
+            pcmParams->eEndian = byteOrder;
             pcmParams->bInterleaved = OMX_TRUE;
             pcmParams->nBitPerSample = 32;
             pcmParams->ePCMMode = OMX_AUDIO_PCMModeLinear;
