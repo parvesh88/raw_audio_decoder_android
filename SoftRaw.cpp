@@ -26,11 +26,11 @@
 namespace android{
 
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
-OMX_ENDIANTYPE byteOrder = OMX_EndianLittle;
+	OMX_ENDIANTYPE byteOrder = OMX_EndianLittle;
 #elif __BYTE_ORDER__ == __ORDER_LITTLE_BIG__
-OMX_ENDIANTYPE byteOrder = OMX_EndianBig;
+	OMX_ENDIANTYPE byteOrder = OMX_EndianBig;
 #else
-OMX_ENDIANTYPE byteOrder = OMX_EndianMax;
+	OMX_ENDIANTYPE byteOrder = OMX_EndianMax;
 #endif
 
 template<class T>
@@ -49,8 +49,8 @@ SoftRaw::SoftRaw(
         OMX_COMPONENTTYPE **component)
     : SimpleSoftOMXComponent(name, callbacks, appData, component),
       mSignalledError(false),
-      mChannelCount(2),
-      mSampleRate(44100) {
+      mChannelCount(8),
+      mSampleRate(48000) {
     initPorts();
     CHECK_EQ(initDecoder(), (status_t)OK);
 }
@@ -66,7 +66,7 @@ void SoftRaw::initPorts() {
     def.eDir = OMX_DirInput;
     def.nBufferCountMin = kNumBuffers;
     def.nBufferCountActual = def.nBufferCountMin;
-    def.nBufferSize = 32 * 1024;
+    def.nBufferSize = 128 * 1024;
     def.bEnabled = OMX_TRUE;
     def.bPopulated = OMX_FALSE;
     def.eDomain = OMX_PortDomainAudio;
@@ -84,7 +84,7 @@ void SoftRaw::initPorts() {
     def.eDir = OMX_DirOutput;
     def.nBufferCountMin = kNumBuffers;
     def.nBufferCountActual = def.nBufferCountMin;
-    def.nBufferSize = 32 * 1024;
+    def.nBufferSize = 128 * 1024;
     def.bEnabled = OMX_TRUE;
     def.bPopulated = OMX_FALSE;
     def.eDomain = OMX_PortDomainAudio;
